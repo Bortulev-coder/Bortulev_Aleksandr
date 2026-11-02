@@ -1,0 +1,38 @@
+[
+  {
+    "key": "itmo",
+    "image": "itmo.jpg",
+    "title": "История Университета ИТМО",
+    "tag": "Квиз · история науки",
+    "period": "ИТМО",
+    "desc": "Люди, свет и открытия. Пять вопросов об учёных, научных открытиях и истории университета.",
+    "url": "https://bortulev-coder.github.io/The-History-of-ITMO-University/"
+  },
+  {
+    "key": "nevsky",
+    "image": "nevsky.png",
+    "title": "Александр Невский",
+    "tag": "Интерактивная инфографика",
+    "period": "XIII век",
+    "desc": "Путь князя, воина и дипломата. Главные события жизни и исторический контекст эпохи.",
+    "url": "https://bortulev-coder.github.io/Aleksandr_Nevsky/"
+  },
+  {
+    "key": "coups",
+    "image": "coups.png",
+    "title": "Эпоха дворцовых переворотов",
+    "tag": "Интерактивная инфографика",
+    "period": "XVIII век",
+    "desc": "От Петра I до Павла I: родословная, смена правителей и ключевые события российской истории.",
+    "url": "https://bortulev-coder.github.io/The-era-of-palace-coups/"
+  },
+  {
+    "key": "movements",
+    "image": "movements.jpg",
+    "title": "История общественной мысли",
+    "tag": "Интерактивная карта",
+    "period": "XIX век",
+    "desc": "Общественные движения России XIX века. Декабристы, народники, их организации, идеи и программы.",
+    "url": "https://bortulev-coder.github.io/Social-movements-in-Russia-in-the-nineteenth-century/"
+  }
+]

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Обо мне | Достижения</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #2f80ed;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(47, 128, 237, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      flex: 1 1 100%;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1 1 100%;
+      margin-top: 0.5rem;
+    }
+    nav a {
+      color: white;
+      margin: 0.5rem 1rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: opacity 0.2s;
+    }
+    nav a:hover {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+    main {
+      padding: 2rem 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Профиль (Карточка шапки) */
+    .profile-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .profile-img {
+      width: 100%;
+      max-width: 640px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+    }
+    .bio-block h2 {
+      margin-top: 0;
+      color: #2f80ed;
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* KPI Dashboard (Правило замкнутой области и схожести) */
+    .dashboard-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      width: 100%;
+    }
+    .metric-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-bottom: 4px solid #2f80ed;
+      transition: transform 0.2s;
+    }
+    .metric-card:hover {
+      transform: translateY(-3px);
+    }
+    .metric-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #2f80ed;
+      line-height: 1.2;
+    }
+    .metric-label {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.25rem;
+      font-weight: 600;
+    }
+
+    /* Дисциплины (Контраст и визуальное группирование) */
+    .subjects-widget {
+      background: white;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .subjects-title {
+      font-size: 0.95rem;
+      font-weight: bold;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.75rem;
+    }
+    .tags-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tag {
+      background: #e8f2ff;
+      color: #2f80ed;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #bcdcff;
+    }
+
+    /* Сетка контента (Правило близости и области) */
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+    }
+    @media (max-width: 550px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Карточки разделов */
+    .section-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+      border-top: 4px solid #2f80ed;
+    }
+    .section-card.full-width {
+      grid-column: 1 / -1;
+    }
+    .section-card strong {
+      display: block;
+      font-size: 1.25rem;
+      color: #1f2937;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f0f4f8;
+    }
+    .section-card ul {
+      padding-left: 1.2rem;
+      margin: 0;
+      flex-grow: 1;
+    }
+    .section-card li {
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+      color: #444;
+    }
+    .section-card li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Блок заключения */
+    .conclusion-card {
+      background: linear-gradient(135deg, #2f80ed 0%, #1e5bb8 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 6px 16px rgba(47, 128, 237, 0.25);
+      text-align: center;
+    }
+    .conclusion-card p {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1rem;
+      }
+      .profile-card, .section-card {
+        padding: 1.25rem;
+      }
+    }
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.2rem;
+      }
+      nav a {
+        font-size: 0.9rem;
+        margin: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Александр С. Бортулев</h1>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="about_me.html">Обо мне</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Главная карточка профиля -->
+    <div class="profile-card">
+      <img src="pen.jpg" alt="Описание изображения" class="profile-img" />
+      <div class="bio-block">
+        <strong>Обо мне</strong>
+        <p>Я, Бортулев Александр Сергеевич, родился 15 марта 2008 года. Вырос в интеллигентной семье врачей и с ранних лет питаю неугасимый интерес к естественно‑научным дисциплинам: химии, физике, математике и информатике. Обучаюсь в НИУ ИТМО, где с энтузиазмом развиваю свои таланты и достигаю высоких результатов. </p>
+      </div>
+    </div>
+
+    <!-- ДЭШБОРД 1: Ключевые метрики (KPI) -->
+    <div class="dashboard-metrics">
+      <div class="metric-card">
+        <div class="metric-number">🥇</div>
+        <div class="metric-label">Золотая медаль I степени</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">11+</div>
+        <div class="metric-label">Олимпиадных наград</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">19+</div>
+        <div class="metric-label">Курсов Образовательного центра «Сириус»</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-number">100%</div>
+        <div class="metric-label">Аттестат с отличием</div>
+      </div>
+    </div>
+
+    <!-- ДЭШБОРД 2: Ключевые области интересов и компетенций -->
+    <div class="subjects-widget">
+      <div class="subjects-title">Профильные направления и ключевые дисциплины</div>
+      <div class="tags-container">
+        <span class="tag">🧪 Химия</span>
+        <span class="tag">💻 Информатика & IT</span>
+        <span class="tag">⚡ Физика</span>
+        <span class="tag">📐 Математика</span>
+        <span class="tag">🧬 Биология</span>
+        <span class="tag">🇬🇧 Advanced English Courses</span>
+      </div>
+    </div>
+
+    <!-- Сетка с агрегированными блоками достижений -->
+    <div class="content-grid">
+      
+      <!-- Блок 1: Среднее общее образование -->
+      <div class="section-card">
+        <strong>Среднее общее образование:</strong>
+        <ul>
+          <li>Удостоен награды Правительства Санкт-Петербурга — почетного знака «За особые успехи в обучении»</li>
+          <li>Награжден благодарственным письмом "За высокие достижения в области дополнительного образования, стремление и упорство в достижении целей и успешное выступление на конкурсах в 2024–2025 учебном году" (От временно исполняющего обязанности главы администрации Адмиралтейского района Санкт-Петербурга)</li>
+          <li>Награжден медалью «ЗА ОСОБЫЕ УСПЕХИ В УЧЕНИИ» I степени (золотая медаль)</li>
+          <li>Получил аттестат о среднем общем образовании с отличием (красного цвета) </li>
+          <li>Получил благодарность за отличные успехи в учебе, целеустремлённость в достижении поставленных целей, активное участие в делах школы и класса, ответственное творческое отношение ко всем делам, за помощь и поддержку классному руководителю (От главы Муниципального образования, исполняющего полномочия председателя Муниципального Совета).</li>
+        </ul>
+      </div>
+
+      <!-- Блок 2: Олимпийские и конкурсные достижения -->
+      <div class="section-card">
+        <strong>Олимпийские и конкурсные достижения:</strong>
+        <ul>
+          <li>Победитель Всероссийского IT‑раунда.</li>
+          <li>Победитель регионального конкурса «Лабиринты науки» по информатике.</li>
+          <li>Призёр региональной олимпиады «Биопрактикум» по биологии.</li>
+          <li>Победитель соревнования по программированию «Битва алгоритмов».</li>
+          <li>Призёр II степени перечневой олимпиады «Бельчонок» по химии.</li>
+          <li>Призёр регионального этапа Всероссийской олимпиады школьников по химии.</li>
+          <li>Призёр перечневой олимпиады «Открытая олимпиада школьников» по химии.</li>
+          <li>Призёр перечневой олимпиады «Гранит науки» по химии (9 класс).</li>
+          <li>Абсолютный победитель олимпиады «Гранит науки» по химии (10 класс).</li>
+          <li>Призёр перечневой олимпиады «Гранит науки» по химии (11 класс).</li>
+          <li>Призер открытых состязаний «Фундамент будущего – ЗФТШ» по химии (олимпиада ЗФТШ при МФТИ)</li>
+        </ul>
+      </div>
+
+      <!-- Блок 3: Школа при МФТИ (ЗФТШ) -->
+      <div class="section-card">
+        <strong>Школа при МФТИ (ЗФТШ):</strong>
+        <ul>
+          <li>Окончил 10 класс с отличием по информатике, химии, физике и биологии.</li>
+          <li>Окончил 9 класс с отличием по химии и биологии.</li>
+          <li>Окончил 11 класс с отличием по физике, математике, химии.</li>
+          <li>Призер открытых состязаний «Фундамент будущего – ЗФТШ» по химии (олимпиада ЗФТШ при МФТИ)</li>
+          <li>Стал преподавателем в ЗФТШ в 2026 году</li>
+        </ul>
+      </div>
+
+      <!-- Блок 4: Образовательные практики и научные стажировки -->
+      <div class="section-card">
+        <strong>Образовательные практики и научные стажировки:</strong>
+        <ul>
+          <li>Участник профильной смены по химии в Образовательном центре «Сириус».</li>
+          <li>Успешно прошёл курс «Инфохимия для старшеклассников» университета ИТМО.</li>
+          <li>Принял участие в «Летней практике школьников по физике» при университете ИТМО.</li>
+          <li>Участник летней и весенней онлайн-школы по физике физфака СПБГУ</li>
+          <li>Прошел обучение по дополнительной общеразвивающей программе в формате интенсивной профильной образовательной программы «Зимний интенсив по химии» от Академии талантов, Центра олимпиад, Санкт-Петербургского государственного университета и Российского государственного педагогического университета имени А.И. Герцена</li>
+        </ul>
+      </div>
+
+      <!-- Блок 5: Профильные курсы Образовательного центра «Сириус» -->
+      <div class="section-card full-width">
+        <strong>Профильные курсы Образовательного центра «Сириус»:</strong>
+        <ul>
+          <li>Курс «Химия. Апрель 2025. 10 класс». С отличием окончил курс, стал победителем конкурса «Задачный практикум»</li>
+          <li>Курс «Линейная алгебра»</li>
+          <li>Курс «Спецкурс. Промышленный органический синтез. 10–11 классы»</li>
+          <li>Курс «Теория вероятностей и математическая статистика»</li>
+          <li>Курс «Математический анализ»</li>
+          <li>Курс «Дополнительные главы химии. 8 класс»</li>
+          <li>Курс «Дополнительные главы биологии. 7 класс»</li>
+          <li>Курс «Дополнительные главы биологии. 8 класс»</li>
+          <li>Курс «Спецкурс. Химия комплексных соединений. 10–11 классы»</li>
+          <li>Курс «Спецкурс. Спектроскопия ЯМР. 10–11 классы»</li>
+          <li>Курс «Дополнительные главы химии. 9 класс»</li>
+          <li>Курс «Дополнительные главы химии. 10 класс»</li>
+          <li>Курс «Дополнительные главы химии. 11 класс»</li>
+          <li>Курс «Дополнительные главы биологии: биохимия. 10 класс»</li>
+          <li>Курс «Введение в программирование на языке C++»</li>
+          <li>Курс «Введение в программирование на языке Python»</li>
+          <li>Курс «Анализ данных на Python»</li>
+          <li>Курс «Введение в алгоритмы: реализация на языке Python»</li>
+          <li>Курс «Дополнительные главы физики: геометрическая оптика. 8 класс».</li>
+          <li>Профильный модуль апрельской программы по химии (122 академических часа)</li>
+        </ul>
+      </div>
+
+      <!-- Блок 6: Онлайн-курсы и программы дополнительного образования -->
+      <div class="section-card full-width">
+        <strong>Онлайн‑курсы и программы дополнительного образования:</strong>
+        <ul>
+          <li>Прошел курс с отличием на английском языке "Продвинутая химия: аналитическая химия и органический синтез" ("Advanced Chemistry: Analytical Chemistry and Organic Synthesis")</li>
+          <li>Прошел курс с отличием на английском языке "Металлы в медицине, их влияние на здоровье человека" ("Metals in medicine, their impact on human health") на платформе OpenLearn от Открытого университета</li>
+          <li>Прошел курс с отличием на английском языке "Промежуточная химия: азот, переходные элементы и комплексы металлов" ("Nitrogen, Transition Elements and Metal Complexes")</li>
+          <li>Успешно окончил онлайн-курс ««Основы общей химии»», организованный  Международным благотворительным фондом поддержки математики имени Леонарда Эйлера в рамках социально-педагогической программы «Формула Единства» при поддержке Фонда Президентских грантов</li>
+          <li>Успешно окончил онлайн-курс ««Комбинаторика и теория вероятностей»», организованный  Международным благотворительным фондом поддержки математики имени Леонарда Эйлера в рамках социально-педагогической программы «Формула Единства» при поддержке Фонда Президентских грантов</li>
+          <li>Успешно окончил онлайн-курс «Теория чисел», организованный  Международным благотворительным фондом поддержки математики имени Леонарда Эйлера в рамках социально-педагогической программы «Формула Единства» при поддержке Фонда Президентских грантов</li>
+          <li>«Комбинаторика и теория вероятностей» на платформе «Формула Единства».</li>
+          <li>«Создание сайтов. Front‑end разработка» на платформе Hello World.</li>
+          <li>Успешно окончил онлайн-курс «НейроСтарт — программирование и ИИ на Python», организованный платформой 1Т - СТАРТ совместно с проектом «Код будущего»</li>
+          <li>Успешно окончил курсы английского языка на платформе «Don't Speak»</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Итоговая заключительная карточка -->
+    <div class="conclusion-card">
+      <p>Каждое упомянутое достижение и завершённый курс отражает мою неугасимую тягу к знаниям, стремление к совершенству и готовность преодолевать самые смелые научные и технические вызовы.</p>
+    </div>
+  </main>
+</body>
+</html>

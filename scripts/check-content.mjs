@@ -1,0 +1,11 @@
+import { readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+const original = readFileSync('content/original-about.html', 'utf8');
+const current = readFileSync('index.html', 'utf8');
+const items = [...original.matchAll(/<li>([\s\S]*?)<\/li>/g)].map(match => match[1]);
+const copied = [...current.matchAll(/<span class="source-text">([\s\S]*?)<\/span>/g)].map(match => match[1]);
+assert.deepEqual(copied, items, 'Original achievement text or order changed');
+for (const match of original.matchAll(/<p>([\s\S]*?)<\/p>/g)) assert(current.includes(match[1]), 'Original paragraph missing');
+for (const match of original.matchAll(/<strong>([\s\S]*?)<\/strong>/g)) assert(current.includes(match[1]), 'Original heading missing');
+for (const route of ['index.html','projects.html','events.html']) assert(current.includes(route));
+console.log('Content fidelity: all 56 original items, biography, conclusion and category titles match exactly.');
